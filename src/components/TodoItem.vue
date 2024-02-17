@@ -1,7 +1,7 @@
 <template>
   <div class="list__item" :class="{ 'list__item_done': isDone }">
     <div class="list__item-wrapper">
-      <input type="checkbox" v-model="isDone">
+      <input type="checkbox" :checked="isDone" @input="handleStatus">
       <div class="list__item-text">
         <label>
           <h3>{{ truncatedTitle }}</h3>
@@ -29,14 +29,17 @@ import '@fortawesome/fontawesome-free/css/all.css';
 
 export default {
   name: 'todo-item',
+  props: {
+    title: String,
+    descr: String,
+    isDone: Boolean,
+    id: String
+  },
   data() {
     return {
-      title: 'Title',
-      descr: 'Descr',
-      isDone: false,
       titleInput: '',
       descrInput: '',
-      isEditable: false
+      isEditable: false,
     }
   },
   methods: {
@@ -48,15 +51,33 @@ export default {
     isEmpty(value) {
       return value.trim() === '';
     },
+    // 
+    handleStatus() {
+      this.$emit('status-to-parent', {
+        type: 'status',
+        payload: {
+          isDone: !this.isDone,
+          id: this.id,
+        }
+      })
+    },
     // Если у нас путые инпуты, то не даем переписать значение
     // И не выходим из editMode
     handleUpdate() {
-        if (this.isEmpty(this.descrInput) || this.isEmpty(this.titleInput)) {
-          alert('Не оставляйте пустые значения!');
-        } else {
-          this.title = this.titleInput.trim();
-          this.descr = this.descrInput.trim();
-        }
+      if (this.isEmpty(this.descrInput) || this.isEmpty(this.titleInput)) {
+        alert('Не оставляйте пустые значения!');
+      } else {
+        // Поскольку у меня тригер на обновление тудушки в двух местах
+        // (на чекбокс и на кнопку сохранить), то я решил использовать такой подход с action и payload
+        this.$emit('text-to-parent', {
+          type: 'text',
+          payload: {
+            id: this.id,
+            title: this.titleInput.trim(),
+            descr: this.descrInput.trim()
+          }
+        })
+      }
     }
   },
   // для того, чтобы у инпутов были дефолтные значения

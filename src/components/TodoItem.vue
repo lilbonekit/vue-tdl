@@ -91,10 +91,10 @@ export default {
   },
   computed: {
     truncatedTitle() {
-      return this.title.length > 10 ? this.title.slice(0, 10) + '...' : this.title
+      return this.title.length > 20 ? this.title.slice(0, 17) + '...' : this.title
     },
     truncatedDecr() {
-      return this.descr.length > 10 ? this.descr.slice(0, 10) + '...' : this.descr
+      return this.descr.length > 30 ? this.descr.slice(0, 27) + '...' : this.descr
     },
   }
 }
@@ -104,7 +104,7 @@ export default {
 .list {
   &__item {
     display: flex;
-    max-width: 600px;
+    max-width: 800px;
     align-items: center;
     width: 100%;
     justify-content: space-between;

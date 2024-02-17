@@ -1,7 +1,7 @@
 <template>
   <div>
     <ul class="list">
-      <li v-for="{ id, title, descr, isDone } in todoItems" :key="id">
+      <li v-for="{ id, title, descr, isDone } in renderFilteredTodos" :key="id">
         <TodoItem 
           :title="title" 
           :descr="descr" 
@@ -9,6 +9,7 @@
           :id="id" 
           @text-to-parent="handleItemEdit"
           @status-to-parent="handleItemEdit"
+          @id-to-parent="handleItemDelete"
         />
       </li>
     </ul>
@@ -28,6 +29,7 @@ export default {
       todoItems: [
         { id: 'aswwwww', title: 'First Item', descr: 'Description 1', isDone: false },
         { id: '22d2dds', title: 'Second Item', descr: 'Description 2', isDone: true },
+        { id: '22d2dsss', title: 'Third Item', descr: 'Description 2', isDone: true },
       ]
     };
   },
@@ -45,6 +47,7 @@ export default {
       if(index === -1) return alert('Error')
 
       switch (data.type) {
+        // пейлод где нам пришел статус
         case 'status': {
           const {isDone} = data.payload
           this.updateStatus(isDone, index)
@@ -52,12 +55,21 @@ export default {
         } 
         
         case 'text': {
+          // пейлод где пришли текстовые изменения
           const {title, descr} = data.payload
           this.updateTitleAndDescr(title, descr, index)
           break;
         } 
       }
 
+    },
+    handleItemDelete(id) {
+      this.todoItems = this.todoItems.filter(todo => todo.id !== id);
+    }
+  },
+  computed: {
+    renderFilteredTodos() {
+      return this.todoItems.filter(todo => todo.isDone === true || true)
     }
   }
 }

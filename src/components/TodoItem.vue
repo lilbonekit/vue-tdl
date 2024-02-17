@@ -17,7 +17,7 @@
       <button class="list__item-button" @click="handleEditMode">
         <i class="fa-solid fa-pen-to-square"></i>
       </button>
-      <button class="list__item-button list__item-button_danger">
+      <button class="list__item-button list__item-button_danger" @click="handleDelete(id)">
         <i class="fa-solid fa-trash" style="color: white;"></i>
       </button>
     </div>
@@ -60,6 +60,10 @@ export default {
           id: this.id,
         }
       })
+    },
+    // Удаление
+    handleDelete(id) {
+      this.$emit('id-to-parent', id)
     },
     // Если у нас путые инпуты, то не даем переписать значение
     // И не выходим из editMode

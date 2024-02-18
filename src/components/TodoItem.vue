@@ -1,27 +1,27 @@
 <template>
-  <div class="list__item" :class="{ 'list__item_done': isDone }">
-    <div class="list__item-wrapper">
-      <input type="checkbox" :checked="isDone" @input="handleStatus">
-      <div class="list__item-text">
-        <label>
-          <h3>{{ truncatedTitle }}</h3>
-          <input v-if="isEditable" type="text" v-model="titleInput" />
-        </label>
-        <label>
-          <p>{{ truncatedDecr }}</p>
-          <input v-if="isEditable" type="text" v-model="descrInput" />
-        </label>
+    <div class="list__item" :class="{ 'list__item_done': isDone }">
+      <div class="list__item-wrapper">
+        <input type="checkbox" :checked="isDone" @input="handleStatus">
+        <div class="list__item-text">
+          <label>
+            <h3>{{ truncatedTitle }}</h3>
+            <input v-if="isEditable" type="text" v-model="titleInput" />
+          </label>
+          <label>
+            <p>{{ truncatedDecr }}</p>
+            <input v-if="isEditable" type="text" v-model="descrInput" />
+          </label>
+        </div>
+      </div>
+      <div class="list__item-icons">
+        <button class="list__item-button" @click="handleEditMode">
+          <i class="fa-solid fa-pen-to-square"></i>
+        </button>
+        <button class="list__item-button list__item-button_danger" @click="handleDelete(id)">
+          <i class="fa-solid fa-trash" style="color: white;"></i>
+        </button>
       </div>
     </div>
-    <div class="list__item-icons">
-      <button class="list__item-button" @click="handleEditMode">
-        <i class="fa-solid fa-pen-to-square"></i>
-      </button>
-      <button class="list__item-button list__item-button_danger" @click="handleDelete(id)">
-        <i class="fa-solid fa-trash" style="color: white;"></i>
-      </button>
-    </div>
-  </div>
 </template>
 
 <script>
@@ -171,5 +171,6 @@ export default {
       }
     }
   }
+
 }
 </style>

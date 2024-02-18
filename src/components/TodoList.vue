@@ -1,11 +1,16 @@
 <template>
   <section class="todos">
-    <SearchPanel 
-      v-if="todoItems.length !== 0" 
-      @query-to-parent="handleQueryUpdate"
-      @filter-to-parent="handleFilterUpdate"
-    />
-    <ul class="list" v-if="todoItems.length !== 0 && renderFilteredTodos.length !== 0">
+      <SearchPanel 
+        v-if="todoItems.length !== 0" 
+        @query-to-parent="handleQueryUpdate"
+        @filter-to-parent="handleFilterUpdate"
+      />
+    <transition-group 
+      name="fade" 
+      class="list" 
+      tag="ul" 
+      v-if="todoItems.length !== 0 && renderFilteredTodos.length !== 0"
+    >
       <li v-for="{ id, title, descr, isDone } in renderFilteredTodos" :key="id">
         <TodoItem 
           :title="title" 
@@ -13,9 +18,10 @@
           :isDone="isDone" 
           :id="id" 
           @text-to-parent="handleItemEdit"
-          @status-to-parent="handleItemEdit" @id-to-parent="handleItemDelete" />
+          @status-to-parent="handleItemEdit" 
+          @id-to-parent="handleItemDelete" />
       </li>
-    </ul>
+    </transition-group>
     <h2 v-else>
       {{ todoItems.length === 0 ? "Add your first todo:" : "No results" }}
     </h2>
@@ -104,7 +110,6 @@ export default {
       this.todoItems = this.todoItems.filter(todo => todo.id !== id);
       // удалили - обновили ЛС
       this.updateLocalStorage();
-
     },
     handleFilterUpdate(filter) {
       this.currentFilter = filter
@@ -168,6 +173,15 @@ ul {
   li {
     display: flex;
   }
+
+// Анимации
+.fade-enter-active, .fade-leave-active {
+  transition: opacity 0.5s;
+}
+.fade-enter, .fade-leave-to /* .fade-leave-active в <2.1.8 */ {
+  opacity: 0;
+}
+
   
 }
 </style>

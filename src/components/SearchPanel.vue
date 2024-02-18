@@ -1,34 +1,34 @@
 <template>
-  <div class="search">
-    <h2>Search:</h2>
-    <input 
-      type="text"
-      placeholder="Search..."
-      v-model="query"
-    >
-    <div class="search__filters">
-      <button 
-        class="search__filters-button"
-        :class="{ 'search__filters-button_active': activeFilter === true }"
-        @click="handleFilter('completed')"
+    <div class="search">
+      <h2>Search:</h2>
+      <input 
+        type="text"
+        placeholder="Search..."
+        v-model="query"
       >
-        Completed
-      </button>
-      <button 
-        class="search__filters-button"
-        :class="{ 'search__filters-button_active': activeFilter === false }"
-        @click="handleFilter('pending')"
-      >
-        Pending
-      </button>
-      <button 
-        class="search__filters-button search__filters-button_text"
-        @click="handleFilter()"
-      >
-        Reset filters
-      </button>
+      <div class="search__filters">
+        <button 
+          class="search__filters-button"
+          :class="{ 'search__filters-button_active': activeFilter === true }"
+          @click="handleFilter('completed')"
+        >
+          Completed
+        </button>
+        <button 
+          class="search__filters-button"
+          :class="{ 'search__filters-button_active': activeFilter === false }"
+          @click="handleFilter('pending')"
+        >
+          Pending
+        </button>
+        <button 
+          class="search__filters-button search__filters-button_text"
+          @click="handleFilter()"
+        >
+          Reset filters
+        </button>
+      </div>
     </div>
-  </div>
 </template>
 
 <script>

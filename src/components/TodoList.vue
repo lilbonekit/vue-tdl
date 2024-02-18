@@ -1,13 +1,14 @@
 <template>
   <section class="todos">
+    <transition
+      name="search"
+    >
       <SearchPanel 
         v-if="todoItems.length !== 0" 
         @query-to-parent="handleQueryUpdate"
         @filter-to-parent="handleFilterUpdate"
       />
-    <!-- 
-      с v-if почему-то не работала анимации при монтировании. 
-      Все еще не анимируется размонтированиею. Нужна помощь с этим -->
+    </transition>
     <transition-group 
       name="fade" 
       class="list" 
@@ -25,9 +26,11 @@
           @id-to-parent="handleItemDelete" />
       </li>
     </transition-group>
-    <h2 v-show="todoItems.length === 0 || renderFilteredTodos.length  === 0">
-      {{ todoItems.length === 0 ? "Add your first todo:" : "No results" }}
-    </h2>
+    <transition name="text">
+      <h2 v-if="todoItems.length === 0 || renderFilteredTodos.length  === 0">
+        {{ todoItems.length === 0 ? "Add your first todo:" : "No results" }}
+      </h2>
+    </transition>
     <AddPanel @inputs-to-parent="addToDo" />
   </section>
 </template>
@@ -190,19 +193,46 @@ export default {
   }
   // Анимации
   .fade-enter-active, .fade-leave-active {
-    transition: opacity 0.5s;
+    transition: all .5s;
   }
   .fade-enter, .fade-leave-to {
     opacity: 0;
+    transform: translateX(100px);
   }
 }
 
+.search-enter-active, .search-leave-active {
+  transition: all .5s;
+}
+
+.search-enter, .search-leave-to {
+  transform: translateY(100px);
+  opacity: 0;
+}
+
+.text-enter-active {
+  transition: .5s all;
+  transition-delay: .5s;
+}
+
+.text-leave-active {
+  transition: .3s all;
+}
+
+.text-leave-to {
+  opacity: 0;
+  transform: translateX(-100px);
+  position: absolute;
+}
+.text-enter {
+  opacity: 0;
+  transform: translateX(-100px);
+}
 
 @media (max-width: 900px) {
     .list {
       max-height: 300px;
     }
-    
   }
 
 </style>

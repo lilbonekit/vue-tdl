@@ -115,7 +115,6 @@ export default {
     flex-grow: 1;
     position: sticky;
     bottom: 20px;
-    widows: 100%;
   }
 }
 

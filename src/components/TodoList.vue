@@ -5,11 +5,14 @@
         @query-to-parent="handleQueryUpdate"
         @filter-to-parent="handleFilterUpdate"
       />
+    <!-- 
+      с v-if почему-то не работала анимации при монтировании. 
+      Все еще не анимируется размонтированиею. Нужна помощь с этим -->
     <transition-group 
       name="fade" 
       class="list" 
       tag="ul" 
-      v-if="todoItems.length !== 0 && renderFilteredTodos.length !== 0"
+      v-show="todoItems.length !== 0 && renderFilteredTodos.length !== 0"
     >
       <li v-for="{ id, title, descr, isDone } in renderFilteredTodos" :key="id">
         <TodoItem 
@@ -22,7 +25,7 @@
           @id-to-parent="handleItemDelete" />
       </li>
     </transition-group>
-    <h2 v-else>
+    <h2 v-show="todoItems.length === 0 || renderFilteredTodos.length  === 0">
       {{ todoItems.length === 0 ? "Add your first todo:" : "No results" }}
     </h2>
     <AddPanel @inputs-to-parent="addToDo" />
@@ -83,6 +86,7 @@ export default {
       // Обновили ЛС
       this.updateLocalStorage();
     },
+    // Универсальная функция, которая обновляет в тудушках только то, что нам пришло
     handleItemEdit(data) {
       const { id } = data.payload
       const index = this.todoItems.findIndex(item => item.id === id);
@@ -120,24 +124,39 @@ export default {
   },
   computed: {
   renderFilteredTodos() {
-    if (this.currentFilter === null) {
+    // Фильтрация
+    switch (this.currentFilter) {
+    // Сброс фильтра и поиск по строкам в названии и описани тудушки
+    case null:
       return this.todoItems
         .filter(todo => 
           todo.title.toLowerCase().includes(this.currentQuery.toLowerCase()) ||
           todo.descr.toLowerCase().includes(this.currentQuery.toLowerCase())
         )
         .reverse();
-    } else {
+    // Ищем только завершенные тудушки (включая строки)
+    case true:
       return this.todoItems
         .filter(todo => 
-          todo.isDone === this.currentFilter &&
+          todo.isDone &&
           (todo.title.toLowerCase().includes(this.currentQuery.toLowerCase()) ||
            todo.descr.toLowerCase().includes(this.currentQuery.toLowerCase()))
         )
         .reverse();
-    }
-    }
+    // Ищем только НЕзавершенные тудушки (включая строки)
+    case false:
+      return this.todoItems
+        .filter(todo => 
+          !todo.isDone &&
+          (todo.title.toLowerCase().includes(this.currentQuery.toLowerCase()) ||
+           todo.descr.toLowerCase().includes(this.currentQuery.toLowerCase()))
+        )
+        .reverse();
+    default:
+      return [];
   }
+  }
+}
 }
 </script>
 
@@ -178,7 +197,7 @@ ul {
 .fade-enter-active, .fade-leave-active {
   transition: opacity 0.5s;
 }
-.fade-enter, .fade-leave-to /* .fade-leave-active в <2.1.8 */ {
+.fade-enter, .fade-leave-to {
   opacity: 0;
 }
 

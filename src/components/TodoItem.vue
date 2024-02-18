@@ -43,6 +43,8 @@ export default {
     }
   },
   methods: {
+    // Включить и отключить режим редактирования названия и описания
+    // Сохранит значения глобально, если все ок
     handleEditMode() {
       this.isEditable = !this.isEditable
       this.handleUpdate()
@@ -51,7 +53,7 @@ export default {
     isEmpty(value) {
       return value.trim() === '';
     },
-    // 
+    // Функция которая передает в пейлоад только статус
     handleStatus() {
       this.$emit('status-to-parent', {
         type: 'status',
@@ -65,8 +67,7 @@ export default {
     handleDelete(id) {
       this.$emit('id-to-parent', id)
     },
-    // Если у нас путые инпуты, то не даем переписать значение
-    // И не выходим из editMode
+    // Если у нас пустые инпуты, то не даем переписать значение в тудушке и даем об этом знать
     handleUpdate() {
       if (this.isEmpty(this.descrInput) || this.isEmpty(this.titleInput)) {
         alert('Не оставляйте пустые значения!');
@@ -84,12 +85,14 @@ export default {
       }
     }
   },
-  // для того, чтобы у инпутов были дефолтные значения
+  // для того, чтобы у инпутов были дефолтные значения 
+  // при включении режима редактирования тудушки
   created() {
     this.titleInput = this.title;
     this.descrInput = this.descr;
   },
   computed: {
+    // обрезаем большой текст и описание
     truncatedTitle() {
       return this.title.length > 20 ? this.title.slice(0, 17) + '...' : this.title
     },

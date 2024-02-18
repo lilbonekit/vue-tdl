@@ -43,6 +43,7 @@ export default {
       this.textareaValue = ''
     },
     handleSubmit() {
+      // Чтобы не отправить в описание textarea состоящий только из пробелов
       if(this.isEmpty(this.inputValue) || this.isEmpty(this.textareaValue)) return alert('Paste data!')
       this.$emit('inputs-to-parent', {
         title: this.inputValue.trim(),

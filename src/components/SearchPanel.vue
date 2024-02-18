@@ -1,4 +1,5 @@
 <template>
+  <!-- Не получается плавно анимировать этот компонент. Нужна помощь -->
     <div class="search">
       <h2>Search:</h2>
       <input 
@@ -55,6 +56,7 @@ export default {
     }
   },
   watch: {
+    // Подъем состояния каждый раз когда обновляем фильтр и строку
     activeFilter(newFilter) {
       this.$emit('filter-to-parent', newFilter)
     },

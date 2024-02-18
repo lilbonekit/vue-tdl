@@ -73,7 +73,6 @@ export default {
   flex-direction: column;
   background-color: #2d2d2d;
   padding: 10px;
-  flex-grow: 1;
   border-radius: 20px;
   height: fit-content;
   gap: 10px;
@@ -96,16 +95,21 @@ export default {
 
     }
   }
-
   h2 {
     color: white;
   }
-
   input {
     padding: 15px;
     border-radius: 10px;
     outline: none;
     border: none;
   }
+}
+
+@media (max-width: 900px) {
+  .search {
+    flex-grow: 1;
+  }
+  
 }
 </style>

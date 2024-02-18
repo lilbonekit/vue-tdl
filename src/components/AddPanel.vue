@@ -50,6 +50,13 @@ export default {
         descr: this.textareaValue
       })
       this.clearInputs()
+      // Добавляем плавный скролл. Сделаем для убоства на мобилке
+      const scrollToOptions = {
+        top: document.body.scrollHeight,
+        behavior: 'smooth'
+      };
+
+      window.scrollTo(scrollToOptions);
     }
   }
 }
@@ -60,49 +67,56 @@ export default {
   display: flex;
   flex-direction: column;
   gap: 10px;
-  flex-grow: 1;
   padding: 10px;
   background-color: #2d2d2d;
   border-radius: 20px;
   height: fit-content;
+  margin-bottom: 70px;
+  form {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+  }
+  h2 {
+    color: white;
+  }
+  
+  label,
+  input,
+  textarea {
+    display: flex;
+    border-radius: 10px;
+    resize: none;
+    border: none;
+    width: 100%;
+    font-family: Avenir, Helvetica, Arial, sans-serif;
+  }
+  
+  input,
+  textarea {
+    padding: 15px;
+  }
+  
+  textarea {
+    height: 100px;
+    align-items: flex-start;
+  }
+  
+  input[type='submit'] {
+    display: flex;
+    justify-content: center;
+    font-weight: 700;
+    cursor: pointer;
+  }
 }
 
-form {
-  display: flex;
-  flex-direction: column;
-  gap: 10px;
-}
-
-h2 {
-  color: white;
-}
-
-label,
-input,
-textarea {
-  display: flex;
-  border-radius: 10px;
-  resize: none;
-  border: none;
-  width: 100%;
-  font-family: Avenir, Helvetica, Arial, sans-serif;
-}
-
-input,
-textarea {
-  padding: 15px;
-}
-
-textarea {
-  height: 100px;
-  align-items: flex-start;
-}
-
-input[type='submit'] {
-  display: flex;
-  justify-content: center;
-  font-weight: 700;
-  cursor: pointer;
+@media (max-width: 1000px) {
+  .add-pannel {
+    flex-grow: 1;
+    position: sticky;
+    bottom: 20px;
+    widows: 100%;
+  }
 }
 
 </style>

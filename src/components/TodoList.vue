@@ -180,27 +180,29 @@ export default {
   gap: 10px;
   max-height: 500px;
   overflow-y: auto;
-}
-
-ul {
   padding-left: 0;
   border: 1px solid #ccc;
   border-radius: 20px;
   padding: 10px;
   margin: 0;
-
   li {
     display: flex;
   }
+  // Анимации
+  .fade-enter-active, .fade-leave-active {
+    transition: opacity 0.5s;
+  }
+  .fade-enter, .fade-leave-to {
+    opacity: 0;
+  }
+}
 
-// Анимации
-.fade-enter-active, .fade-leave-active {
-  transition: opacity 0.5s;
-}
-.fade-enter, .fade-leave-to {
-  opacity: 0;
-}
 
-  
-}
+@media (max-width: 900px) {
+    .list {
+      max-height: 300px;
+    }
+    
+  }
+
 </style>

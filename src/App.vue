@@ -2,6 +2,7 @@
   <div id="app">
     <h1>Todo list</h1>
     <TodoList/>
+    <footer>Made by <a href="https://github.com/lilbonekit/vue-tdl">lilbonekit</a></footer>
   </div>
 </template>
 
@@ -16,7 +17,11 @@ export default {
 }
 </script>
 
-<style>
+<style lang="scss">
+* {
+  box-sizing: border-box;
+}
+
 #app {
   font-family: Avenir, Helvetica, Arial, sans-serif;
   -webkit-font-smoothing: antialiased;
@@ -28,5 +33,18 @@ export default {
 }
 h1 {
   font-size: 4rem;
+}
+footer {
+  text-align: center;
+  font-size: 12px;
+  padding: 10px;
+  bottom: 20px;
+  position: fixed;
+  width: 100%;
+  max-width: 1200px;
+  z-index: -1;
+  a {
+    color: black;
+  }
 }
 </style>

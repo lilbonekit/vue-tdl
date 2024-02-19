@@ -2,6 +2,8 @@
   <div id="app">
     <h1>Todo list</h1>
     <TodoList/>
+    <!-- FEATURE BRANCH -->
+    <!-- rel noopener -->
     <footer>Made by <a href="https://github.com/lilbonekit/vue-tdl">lilbonekit</a></footer>
   </div>
 </template>
@@ -22,6 +24,7 @@ export default {
   box-sizing: border-box;
 }
 
+// вынести в scss
 #app {
   font-family: Avenir, Helvetica, Arial, sans-serif;
   -webkit-font-smoothing: antialiased;
